@@ -1,4 +1,3 @@
-<!-- components/ProgressCard.vue -->
 <script setup>
 const props = defineProps({
   totalCompletedCount: {

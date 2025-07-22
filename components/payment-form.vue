@@ -21,8 +21,8 @@ const form = reactive({
 });
 
 const paymentMethods = [
-  "GP (Grameenphone)",
-  "BL (Banglalink)",
+  "GP",
+  "BL",
   "Robi",
   "Airtel",
   "Teletalk",
