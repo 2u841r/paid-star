@@ -21,14 +21,14 @@ const form = reactive({
 });
 
 const paymentMethods = [
+  "bKash",
+  "Nagad",
+  "Rocket",
   "GP",
   "BL",
   "Robi",
   "Airtel",
   "Teletalk",
-  "bKash",
-  "Nagad",
-  "Rocket",
 ];
 
 function handleSubmit() {
@@ -54,13 +54,8 @@ function handleSubmit() {
               <span class="label-text">Mobile Number</span>
             </label>
             <input
-              id="mobileNumber"
-              v-model="form.mobileNumber"
-              type="tel"
-              pattern="01[0-9]{9}"
-              placeholder="01XXXXXXXXX"
-              class="input input-bordered"
-              required
+              id="mobileNumber" v-model="form.mobileNumber" type="tel" pattern="01[0-9]{9}"
+              placeholder="01XXXXXXXXX" class="input input-bordered" required
             >
             <label class="label">
               <span class="label-text-alt">11 digits starting with 0</span>
@@ -71,20 +66,11 @@ function handleSubmit() {
             <label for="paymentMethod" class="label">
               <span class="label-text">Payment Method</span>
             </label>
-            <select
-              id="paymentMethod"
-              v-model="form.paymentMethod"
-              class="select select-bordered"
-              required
-            >
+            <select id="paymentMethod" v-model="form.paymentMethod" class="select select-bordered" required>
               <option value="">
                 Select payment method
               </option>
-              <option
-                v-for="method in paymentMethods"
-                :key="method"
-                :value="method"
-              >
+              <option v-for="method in paymentMethods" :key="method" :value="method">
                 {{ method }}
               </option>
             </select>
@@ -105,22 +91,11 @@ function handleSubmit() {
           </div>
 
           <div class="flex gap-3 pt-4">
-            <button
-              type="button"
-              class="btn btn-outline flex-1"
-              @click="$emit('cancel')"
-            >
+            <button type="button" class="btn btn-outline flex-1" @click="$emit('cancel')">
               Back
             </button>
-            <button
-              type="submit"
-              :disabled="submitting"
-              class="btn btn-primary flex-1"
-            >
-              <span
-                v-if="submitting"
-                class="loading loading-spinner loading-sm"
-              />
+            <button type="submit" :disabled="submitting" class="btn btn-primary flex-1">
+              <span v-if="submitting" class="loading loading-spinner loading-sm" />
               {{ submitting ? 'Submitting...' : 'Submit Request' }}
             </button>
           </div>
