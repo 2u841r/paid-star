@@ -14,7 +14,7 @@ const authStore = useAuthStore();
         </p>
         <AuthButton v-if="!authStore.user" />
         <NuxtLink v-else to="/dashboard" class="btn btn-primary">
-          Start Logging
+          Start Earning
         </NuxtLink>
       </div>
     </div>
