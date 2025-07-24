@@ -7,27 +7,15 @@ Win ৳20 mobile recharge or MFS directly by starring some repos on GitHub and f
 Make sure to install dependencies:
 
 ```bash
-pnpm install
+npm install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+Get credentials from https://app.turso.tech/ and set them to .env
+then
 
 ```bash
-pnpm dev
+npx drizzle-kit generate
+npx drizzle-kit migrate
 ```
 
-## Production
-
-Build the application for production:
-
-```bash
-pnpm build
-```
-
-Locally preview production build:
-
-```bash
-pnpm preview
-```
+more info: https://orm.drizzle.team/docs/get-started/turso-new
