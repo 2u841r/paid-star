@@ -19,6 +19,10 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  loadingTasks: {
+    type: Set,
+    default: () => new Set(),
+  },
 });
 
 defineEmits(["completeTask"]);
@@ -31,7 +35,7 @@ defineEmits(["completeTask"]);
         Complete Tasks to Earn Money
       </h2>
 
-      <div v-if="loading" class="flex flex-col items-center justify-center py-8">
+      <div v-if="loading && tasks.length === 0" class="flex flex-col items-center justify-center py-8">
         <span class="loading loading-spinner loading-lg text-primary" />
         <p class="mt-4 text-base-content/70">
           Loading tasks...
@@ -51,6 +55,7 @@ defineEmits(["completeTask"]);
           :task="task"
           :completed-tasks="completedTasks"
           :github-status="githubStatus"
+          :is-loading="loadingTasks.has(task.id)"
           @complete="$emit('completeTask', $event)"
         />
       </div>

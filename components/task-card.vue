@@ -14,6 +14,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  isLoading: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 defineEmits(["complete"]);
@@ -87,9 +91,11 @@ const isAlreadyDone = computed(() => {
           <button
             v-else
             class="btn btn-primary"
+            :disabled="isLoading"
             @click="$emit('complete', task)"
           >
-            {{ task.action === 'star' ? '⭐ Star' : '👥 Follow' }}
+            <span v-if="isLoading" class="loading loading-spinner loading-sm" />
+            {{ isLoading ? 'Processing...' : (task.action === 'star' ? '⭐ Star' : '👥 Follow') }}
           </button>
         </div>
       </div>

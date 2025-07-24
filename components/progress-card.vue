@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps({
+const _props = defineProps({
   totalCompletedCount: {
     type: Number,
     required: true,
@@ -20,9 +20,13 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
+  isUpdating: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-defineEmits(["show-payment-form"]);
+defineEmits(["showPaymentForm"]);
 </script>
 
 <template>
@@ -35,7 +39,10 @@ defineEmits(["show-payment-form"]);
       <div class="space-y-4">
         <div class="flex justify-between text-sm">
           <span>Completed</span>
-          <span>{{ totalCompletedCount }} / {{ totalTasks }}</span>
+          <span class="flex items-center gap-2">
+            {{ totalCompletedCount }} / {{ totalTasks }}
+            <span v-if="isUpdating" class="loading loading-spinner loading-xs text-primary" />
+          </span>
         </div>
         <progress
           class="progress progress-primary w-full"
@@ -63,7 +70,7 @@ defineEmits(["show-payment-form"]);
             You can now submit your payment request.
           </p>
         </div>
-        <button class="btn btn-success" @click="$emit('show-payment-form')">
+        <button class="btn btn-success" @click="$emit('showPaymentForm')">
           Submit Payment Request
         </button>
       </div>

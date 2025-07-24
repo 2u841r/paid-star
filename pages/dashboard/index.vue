@@ -18,6 +18,7 @@ const showPaymentForm = ref(false);
 const submitting = ref(false);
 const seeding = ref(false);
 const paymentRequestStatus = ref(null);
+const loadingTasks = ref(new Set()); // Track which tasks are loading
 
 // Computed properties
 const githubUsername = computed(() => {
@@ -113,23 +114,38 @@ async function loadPaymentRequestStatus() {
 
 async function completeTask(task) {
   try {
+    // Add task to loading set for immediate feedback
+    loadingTasks.value.add(task.id);
+
     const response = await $fetch(`/api/tasks/${task.id}/complete`, {
       method: "POST",
     });
 
     if (response.success) {
-      await loadTasks();
+      // Immediately update the completed tasks for instant feedback
+      if (!completedTasks.value.includes(task.id)) {
+        completedTasks.value.push(task.id);
+      }
 
       if (response.manual) {
-        console.log("Task completed manually due to GitHub API limitations");
+        console.error("Task completed manually due to GitHub API limitations");
       }
       else {
-        console.log("Task completed successfully!");
+        console.error("Task completed successfully!");
       }
+
+      // Refresh stats after a 2-second delay to allow GitHub API to update
+      setTimeout(async () => {
+        await loadTasks();
+      }, 2000);
     }
   }
   catch (error) {
     console.error("Error completing task:", error);
+  }
+  finally {
+    // Remove task from loading set
+    loadingTasks.value.delete(task.id);
   }
 }
 
@@ -165,7 +181,7 @@ async function submitPaymentRequest(formData) {
     });
 
     if (response.success) {
-      console.log(
+      console.error(
         "Payment request submitted successfully! Admin will verify and process your payment.",
       );
       showPaymentForm.value = false;
@@ -212,6 +228,7 @@ onMounted(async () => {
         :completed-tasks="completedTasks"
         :github-status="githubStatus"
         :loading="loading"
+        :loading-tasks="loadingTasks"
         @complete-task="completeTask"
       />
 
@@ -221,6 +238,7 @@ onMounted(async () => {
         :progress-percentage="progressPercentage"
         :all-tasks-completed="allTasksCompleted"
         :has-submitted-payment-request="hasSubmittedPaymentRequest"
+        :is-updating="loadingTasks.size > 0"
         @show-payment-form="showPaymentForm = true"
       />
     </div>
