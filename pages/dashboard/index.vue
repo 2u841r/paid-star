@@ -238,6 +238,7 @@ onMounted(async () => {
         :progress-percentage="progressPercentage"
         :all-tasks-completed="allTasksCompleted"
         :has-submitted-payment-request="hasSubmittedPaymentRequest"
+        :payment-request="paymentRequestStatus?.paymentRequest"
         :is-updating="loadingTasks.size > 0"
         @show-payment-form="showPaymentForm = true"
       />

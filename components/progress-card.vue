@@ -20,6 +20,10 @@ const _props = defineProps({
     type: Boolean,
     required: true,
   },
+  paymentRequest: {
+    type: Object,
+    default: null,
+  },
   isUpdating: {
     type: Boolean,
     default: false,
@@ -77,22 +81,43 @@ defineEmits(["showPaymentForm"]);
 
       <div
         v-if="allTasksCompleted && hasSubmittedPaymentRequest"
-        class="alert alert-info mt-4"
+        class="alert alert-info mt-4 flex-col items-start"
       >
-        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-          <path
-            fill-rule="evenodd"
-            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-            clip-rule="evenodd"
-          />
-        </svg>
-        <div>
+        <div class="flex items-center gap-2">
+          <svg class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+              clip-rule="evenodd"
+            />
+          </svg>
           <h3 class="font-bold">
-            Payment Request Submitted!
+            Payment Request Submitted
           </h3>
-          <p class="text-sm">
-            Please wait a few hours to maybe days to get your rewards. We'll
-            process your payment request as soon as possible.
+        </div>
+        <div v-if="paymentRequest" class="w-full mt-2 space-y-1 text-sm">
+          <div class="flex gap-2">
+            <span class="opacity-70 w-32 shrink-0">Mobile Number</span>
+            <span class="font-mono font-medium">{{ paymentRequest.mobileNumber }}</span>
+          </div>
+          <div class="flex gap-2">
+            <span class="opacity-70 w-32 shrink-0">Payment Method</span>
+            <span class="font-medium">{{ paymentRequest.paymentMethod }}</span>
+          </div>
+          <div class="flex gap-2">
+            <span class="opacity-70 w-32 shrink-0">GitHub</span>
+            <span class="font-medium">{{ paymentRequest.githubId }}</span>
+          </div>
+          <div class="flex gap-2">
+            <span class="opacity-70 w-32 shrink-0">Status</span>
+            <span class="badge badge-sm badge-outline capitalize">{{ paymentRequest.status }}</span>
+          </div>
+          <div class="flex gap-2">
+            <span class="opacity-70 w-32 shrink-0">Submitted At</span>
+            <span>{{ new Date(paymentRequest.requestedAt).toLocaleString() }}</span>
+          </div>
+          <p class="opacity-70 pt-1">
+            We'll process your payment as soon as possible.
           </p>
         </div>
       </div>
