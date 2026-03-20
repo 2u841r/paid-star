@@ -8,7 +8,7 @@ import { account } from "~/lib/db/schema/auth";
 export default defineEventHandler(async (event) => {
   const session = await auth.api.getSession(event);
 
-  if (!session) {
+  if (!session?.user) {
     throw createError({
       statusCode: 401,
       statusMessage: "Unauthorized",

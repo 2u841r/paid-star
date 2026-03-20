@@ -7,7 +7,7 @@ import { paymentRequest, task, userTaskCompletion } from "~/lib/db/schema";
 export default defineEventHandler(async (event) => {
   const session = await auth.api.getSession(event);
 
-  if (!session) {
+  if (!session?.user) {
     throw createError({
       statusCode: 401,
       statusMessage: "Unauthorized",

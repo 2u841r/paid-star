@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 export default defineEventHandler(async (event) => {
   const session = await auth.api.getSession(event);
 
-  if (!session || (session.user as any).role !== "admin") {
+  if (!session?.user || (session.user as any).role !== "admin") {
     throw createError({ statusCode: 403, statusMessage: "Forbidden" });
   }
 
