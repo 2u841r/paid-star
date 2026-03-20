@@ -34,6 +34,7 @@ export const paymentRequest = sqliteTable("payment_request", {
   githubId: text().notNull(), // GitHub username for verification
   status: text().notNull().default("pending"), // "pending", "verified", "paid", "rejected"
   adminNotes: text(), // Admin notes for verification
+  txnId: text(), // Transaction ID after payment
   requestedAt: integer().notNull(),
   verifiedAt: integer(),
   paidAt: integer(),
